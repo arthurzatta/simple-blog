@@ -1,0 +1,23 @@
+{
+    "name": "simple_blog",
+    "version": "1.0.0",
+    "description": "A simple blog for training some skills",
+    "main": "./src/app.js",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.17.1",
+        "knex": "^0.95.4",
+        "mongodb": "^3.6.6",
+        "mongoose": "^5.12.5",
+        "nodemon": "^2.0.7"
+    },
+    "devDependencies": {
+        "dotenv": "^9.0.0",
+        "eslint": "^7.25.0",
+        "eslint-config-airbnb-base": "^14.2.1",
+        "sucrase": "^3.18.1"
+    },
+    "scripts": {
+        "start": "nodemon ./src/app.js"
+    }
+}

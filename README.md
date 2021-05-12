@@ -4,7 +4,9 @@
 - Database conection with mongodb (their object style can be a benefit here because of the content simplicity)
 
 - Database:
-    - [ ] Connection and configuration(mongodb)
+    - [x] Connection and configuration(mongodb)
+      - What happened? 
+        - The server doesn't connect with database, I'm not sure if this is because of values used for host and ports.
     - [ ] Posts
     - [ ] Tags
 
