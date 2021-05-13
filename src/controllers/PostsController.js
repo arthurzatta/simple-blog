@@ -27,11 +27,18 @@ export default new class PostsController {
         try{
 
             const { id } = request.params;
-            const { title, content } = request.body;
-            
-            const post = await Post.updateOne({title: title, content: content });
+            const { title, content, tags } = request.body;
 
-            return 
+
+            //Is it the update by the object send as argument or theres another argument who needs to be provided to the function?
+            const updatedPost = await Post.findOneAndUpdate({ _id: id }, { title, content, tags }, {
+                new: true,
+                timestamps: true,
+                useFindAndModify: false
+            });
+
+            return response.status(200).json(updatedPost);
+
         } catch(error) {
             return response.status(400).json({error: error});
         }
@@ -39,11 +46,13 @@ export default new class PostsController {
 
     async delete(request, response) {
         try {
-            const { id } = request.params;
-            const deletedStatus = await Post.deleteOne({ id: id });
+            const { id } = request.body;
+            const deleted = await Post.findByIdAndDelete(id, {
+                useFindAndModify: false
+            });
             
-            if (!!deletedStatus.ok) {
-                return response.status(401).json({ error: "This post doesn't exist"});
+            if(!deleted) {
+                return response.status(400).json({ error: 'Object not found'});
             }
 
             return response.status(200);
