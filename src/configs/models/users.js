@@ -1,29 +1,28 @@
 import mongoose from '../../database/config';
 
-const PostSchema = new mongoose.Schema({
-    title: {
+const UserSchema = new mongoose.Schema({
+    username: {
         type: String,
         require: true
     },
-    content: {
+    email: {
         type: String,
         require: true
     },
-    tags: [{
+    description: {
         type: String,
         require: false
-    }],
-    user: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users'   
-    }],
+    },
+    password:{
+        type: String,
+        require: true
+    },
     createdAt: {
         type: Date,
         default: Date.now
-    },
-
+    }
 });
 
-const Post = mongoose.model('Post', PostSchema);
+const User = mongoose.Model('Users', UserSchema);
 
-export default Post;
+export default User;
