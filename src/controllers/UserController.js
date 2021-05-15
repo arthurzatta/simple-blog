@@ -7,9 +7,16 @@ export default class User {
         try {
             const { username, email, password, description } = request.body;
 
+            const matchUser = await User.find(email);
+
+            if(matchUser) {
+                return response.status(400).json( { error: 'Email used' });
+            }
+
             if( !(username || email || password) ) {
                 return response.status(400).json({ error: 'Informations not provided'})
             }
+
             //I need to remember how to do JWT
             //After storage authentication needs to be made, so check up the email and password conditions
             const user = await new User({ username, email, password, description });
