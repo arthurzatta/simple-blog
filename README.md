@@ -7,16 +7,20 @@
     - [x] Connection and configuration(mongodb)
       - What happened? 
         - The server doesn't connect with database, I'm not sure if this is because of values used for host and ports.
-    - [ ] Posts
-    - [ ] Tags
+    - [x] Posts
+    - [x] Tags
+    - [ ] Users
 
 - API:
-    - [ ] Needs to return all the posts
-    - [ ] Can be possible to create new posts
-    - [ ] Delete and update the posts
+    - [ ] Return information about each user
+    - [ ] JSW authentication 
+    - [ ] Needs to return all the users
+    - [x] Needs to return all the posts
+    - [x] Can be possible to create new posts
+    - [x] Delete and update the posts
     - [ ] Do the samethings with tags
-    - [ ] Try to deploy(maybe heroku)
     - [ ] Understand how to make a panel only for my access without login or if I need to make new posts directly on backend, maybe use some markdown and commit them to github for use as base of posts
+    - [ ] Try to deploy(maybe heroku)
     - [ ] Possibilitie of insert images
 
 - React:
