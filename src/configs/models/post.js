@@ -13,10 +13,10 @@ const PostSchema = new mongoose.Schema({
         type: String,
         require: false
     }],
-    user: [{
+    user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Users'   
-    }],
+        ref: 'Users',
+    },
     createdAt: {
         type: Date,
         default: Date.now
