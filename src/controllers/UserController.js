@@ -1,26 +1,34 @@
 import { response } from 'express';
+import bcrypt from 'bcrypt'; 
 import User from '../configs/models/users';
 
-export default class User {
+export default new class UserController {
 
     async create(request, response) {
         try {
-            const { username, email, password, description } = request.body;
+            const { username, email, description, password } = request.body;
 
-            const matchUser = await User.find(email);
+            const [ matchUser ] = await User.find({ email });
 
             if(matchUser) {
                 return response.status(400).json( { error: 'Email used' });
             }
 
-            if( !(username || email || password) ) {
+            //Maybe this is not recommended 
+            if( !(username && email && password) ) {
                 return response.status(400).json({ error: 'Informations not provided'})
             }
 
+            //Using salt => this technique adds another random string to the hash string generated  
+            const passwordHash =  await bcrypt.hashSync(password, 10);
+
             //I need to remember how to do JWT
             //After storage authentication needs to be made, so check up the email and password conditions
-            const user = await new User({ username, email, password, description });
+            const user = await new User({ username, email, password: passwordHash, description }).save();
+
+            return response.status(200).json(user);
         } catch(error) {
+            console.log(error);
             return response.status(400).json(error);
         }
     }

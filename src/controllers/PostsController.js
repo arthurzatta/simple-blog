@@ -3,9 +3,8 @@ import Post from '../configs/models/post';
 export default new class PostsController {
     async create(request, response) {
         try{
-            const { title, content, tags} = request.body;
-            const post = await new Post({ title, content, tags });
-            post.save()
+            const data = request.body;
+            const post = await new Post(data).save();
             return response.status(200).json(post);
         } catch(error){
             console.log(error);
@@ -22,6 +21,17 @@ export default new class PostsController {
         }
     }
 
+    async postsSingleUser(request, response) {
+        try {
+            const { user } = request.body;
+            const posts = await Post.find({ user });
+
+            return response.status(200).json(posts);
+        } catch (error) {
+            console.log(error);
+            return response.status(400).json({ error: "Not find" })
+        }
+    }
 
     async update(request, response) {
         try{
@@ -46,16 +56,18 @@ export default new class PostsController {
 
     async delete(request, response) {
         try {
-            const { id } = request.body;
-            const deleted = await Post.findByIdAndDelete(id, {
-                useFindAndModify: false
+            const { id } = request.params;
+            //Theres not garantee that the selected post will be deleted by your owner
+            const { value } = await Post.findByIdAndRemove(id, {
+                useFindAndModify: false,
+                rawResult: true
             });
             
-            if(!deleted) {
+            if(!value) {
                 return response.status(400).json({ error: 'Object not found'});
             }
 
-            return response.status(200);
+            return response.status(200).json(value);
             
         } catch(error) {
             return response.status(400).json({ error: error })
