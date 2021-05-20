@@ -13,14 +13,18 @@
 
 - API:
     - [ ] Return information about each user
-    - [ ] JSW authentication 
-    - [ ] Needs to return all the users
+    - [x] JSW authentication basic
+      - [ ] Complementations
+    - [ ] Store only password hash when a user is create
+    - [x] Needs to return all the users
     - [x] Needs to return all the posts
     - [x] Can be possible to create new posts
     - [x] Delete and update the posts
     - [ ] Do the samethings with tags
     - [ ] Understand how to make a panel only for my access without login or if I need to make new posts directly on backend, maybe use some markdown and commit them to github for use as base of posts
-    - [ ] Try to deploy(maybe heroku)
+    - [ ] Try to deploy
+      - [ ] Docker -> mongodb and node.js
+      - [ ] Heroku
     - [ ] Possibilitie of insert images
 
 - React:
@@ -28,3 +32,6 @@
     - [ ] Maybe use proxy functions 
     - [ ] Immutabilitie 
 
+- Docker containers
+  - [ ] Mongodb 
+  - [ ] Node.js with application

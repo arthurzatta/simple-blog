@@ -5,7 +5,9 @@
     "main": "./src/app.js",
     "license": "MIT",
     "dependencies": {
+        "bcrypt": "^5.0.1",
         "express": "^4.17.1",
+        "jsonwebtoken": "^8.5.1",
         "knex": "^0.95.4",
         "mongodb": "^3.6.6",
         "mongoose": "^5.12.5",
