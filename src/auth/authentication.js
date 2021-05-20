@@ -1,16 +1,16 @@
 import * as jwt from 'jsonwebtoken';
 import User from '../configs/models/users';
-
+import bcrypt from 'bcrypt';
 
 const sign = payload => jwt.sign(payload, process.env.SECRET, { algorithm: 'HS256', expiresIn: 86400 });
 
-const verify = token => HTMLUnknownElement.jerify(token, process.env.SECRET);
+const verify = token => jwt.verify(token, process.env.SECRET);
 
-async function authentication(request, response, next) {
+export async function authentication(request, response, next) {
     
     try {
 
-        const autHeader = request.headers.authorization;
+        const authHeader = request.headers.authorization;
 
         if(!authHeader) {
             return response.status(401).json({ error: 'Token not provided'});
@@ -23,31 +23,31 @@ async function authentication(request, response, next) {
         return next()
 
     } catch(error) {
-        
+        //401 => user not authorized
         return response.status(401).json({ error: 'Invalid token'});
     }
 }
 
-async function login(request, response) {
-    const [, hash] = request.headers.authorization.split(' ');
-    const [ email, password ] = Buffer.from(hash, 'base64').toString().split(':');
-    const pass = password;
-
+export async function login(request, response) {
     try {
+        const [, hash] = request.headers.authorization.split(' ');
+        const [ email, password ] = Buffer.from(hash, 'base64').toString().split(':');
 
-        const [{ password, ...user }] = await User.find({ email });
+        const accountData = await User.findOne({ email });
 
-        if(!user) {
+        if(!accountData) {
             return response.status(401).json({ error: 'Invalid email' });
         }
 
-        if(password !== pass) {
+        if(!bcrypt.compareSync(password, accountData.password)) {
             return response.status(401).json({ error: 'Invalid password' });
         }
 
-        const token = await sign({ user: user._id });
+        const token = await sign({ user: accountData._id });
 
-        response.json({ user, token });
+        const { username, description} = accountData;
+
+        response.status(200).json({ username, email, description, token });
 
     } catch(error) {
         return response.status(401).json(error);
